@@ -71,7 +71,7 @@ namespace Oganesyan_OOPP_lab6
             ToggleFields(false);
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void savebutton_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1)
             {
@@ -97,7 +97,7 @@ namespace Oganesyan_OOPP_lab6
                     return;
                 }
 
-                if (Convert.ToDouble(rating.Text) < 0 || Convert.ToInt32(rating.Text) > 5)
+                if (Convert.ToDouble(rating.Text) < 0 || Convert.ToDouble(rating.Text) > 5)
                 {
                     MessageBox.Show("Рейтинг должен быть числом от 0,0 до 5,0.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -182,7 +182,7 @@ namespace Oganesyan_OOPP_lab6
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addbutton_Click(object sender, EventArgs e)
         {
             AddBook(0);
             UpdateListBox();
@@ -197,7 +197,7 @@ namespace Oganesyan_OOPP_lab6
             listBox1.Enabled = false;
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void addebutton_Click(object sender, EventArgs e)
         {
             AddBook(1);
             UpdateListBox();
@@ -214,14 +214,14 @@ namespace Oganesyan_OOPP_lab6
 
         private void ToggleButtons(bool enable)
         {
-            button1.Enabled = enable;
-            button4.Enabled = enable;
-            button2.Enabled = enable;
-            button6.Enabled = enable;
-            button3.Enabled = enable;
+            addbutton.Enabled = enable;
+            addebutton.Enabled = enable;
+            loadfilebutton.Enabled = enable;
+            deletebutton.Enabled = enable;
+            savefilebutton.Enabled = enable;
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void deletebutton_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1)
             {
@@ -250,7 +250,7 @@ namespace Oganesyan_OOPP_lab6
             }
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void cancelbutton_Click(object sender, EventArgs e)
         {
             if (isAddingObject && listBox1.Items.Count > 0)
             {
@@ -281,7 +281,7 @@ namespace Oganesyan_OOPP_lab6
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void loadfilebutton_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Text Files (*.txt)|*.txt";
@@ -294,7 +294,7 @@ namespace Oganesyan_OOPP_lab6
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void savefilebutton_Click(object sender, EventArgs e)
         {
             if (GetLibrarySize() == 0)
             {
@@ -331,14 +331,5 @@ namespace Oganesyan_OOPP_lab6
             rating.Enabled = enable;
             link.Enabled = enable;
         }
-
-        private void title_TextChanged(object sender, EventArgs e) {}
-        private void label1_Click(object sender, EventArgs e) {}
-        private void label2_Click(object sender, EventArgs e) {}
-        private void label3_Click(object sender, EventArgs e) {}
-        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {}
-        private void maskedTextBox3_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {}
-        private void textBox1_TextChanged(object sender, EventArgs e) {}
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {}
     }
 }
