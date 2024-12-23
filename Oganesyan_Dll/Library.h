@@ -11,14 +11,12 @@ private:
 
 public:
     void AddBook(shared_ptr<Book> book);
-    //void AddEBook();
     void Clear();
 
     void SaveToFile(const std::string& filename);
     void LoadFromFile(const std::string& filename);
     shared_ptr<Book> get(int i);
 
-    //shared_ptr<Book> GetBook(int index);
     int GetSize() const;
 
     template<class Archive>

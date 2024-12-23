@@ -42,6 +42,9 @@ namespace Oganesyan_OOPP_lab6
         private static extern void LoadLibraryBooks(string filename);
 
         [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
+        private static extern void SaveBooks(string filename);
+
+        [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
         private static extern int GetLibrarySize();
 
         [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
@@ -119,12 +122,6 @@ namespace Oganesyan_OOPP_lab6
             listBox1.SelectedIndex = selected;
             ToggleButtons(true);
         }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-
-        }
-
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -251,26 +248,22 @@ namespace Oganesyan_OOPP_lab6
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filename = openFileDialog.FileName;
-
                 LoadLibraryBooks(filename);
-
-                int count = GetLibrarySize();
-                listBox1.Items.Clear();
-
-                for (int i = 0; i < count; i++)
-                {
-                    GetBookInfoStruct(i, out Book book);
-                    //string info = $"Title: {bookInfo.Title}, Author: {bookInfo.Author}, Year: {bookInfo.ReleaseYear}, " +
-                    //              $"Publisher: {bookInfo.PublishingHouse}, Rating: {bookInfo.Rating}, " +
-                    //              $"Is Electronic: {bookInfo.IsElectronic}";
-                    //listBox1.Items.Add(info);
-                }
+                UpdateListBox();
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Binary Files (*.dat)|*.dat";
 
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filename = saveFileDialog.FileName;
+                SaveBooks(filename);
+                MessageBox.Show("Библиотека успешно сохранена!", "Сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void title_TextChanged(object sender, EventArgs e)
@@ -298,6 +291,10 @@ namespace Oganesyan_OOPP_lab6
 
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
 
         }

@@ -38,6 +38,25 @@ extern "C" {
 
     __declspec(dllexport) void __stdcall LoadLibraryBooks(const char* filename) {
         library.LoadFromFile(filename);
+        //if (id < 0 || id >= library.GetSize()) return;
+
+        //auto book = library.get(id);
+
+        //book->setTitle(book_struct.title);
+        //book->setAuthor(book_struct.author);
+        //book->setRelease_Year(book_struct.release_year);
+        //book->setPublishing_House(book_struct.publishing_house);
+        //book->setIn_Stock(book_struct.in_stock);
+        //book->setRating(book_struct.rating);
+
+        //auto eBook = dynamic_pointer_cast<EBook>(book);
+        //if (eBook) {
+        //    eBook->setLink(book_struct.link);
+        //}
+    }
+
+    __declspec(dllexport) void __stdcall SaveBooks(const char* filename) {
+        library.SaveToFile(filename);
     }
 
     __declspec(dllexport) int __stdcall GetLibrarySize() {
