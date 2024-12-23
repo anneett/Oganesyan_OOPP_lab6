@@ -13,6 +13,8 @@ namespace Oganesyan_OOPP_lab6
 {
     public partial class Form1 : Form
     {
+        private bool isAddingObject = false;
+
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         public struct Book
         {
@@ -66,13 +68,14 @@ namespace Oganesyan_OOPP_lab6
         public Form1()
         {
             InitializeComponent();
+            ToggleFields(false);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex == -1)
             {
-                MessageBox.Show("Выберите, какую добавить книгу.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Выберите данные для сохранения.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -94,6 +97,12 @@ namespace Oganesyan_OOPP_lab6
                     return;
                 }
 
+                if (Convert.ToDouble(rating.Text) < 0 || Convert.ToInt32(rating.Text) > 5)
+                {
+                    MessageBox.Show("Рейтинг должен быть числом от 0,0 до 5,0.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 beforeEditBook.Title = title.Text;
                 beforeEditBook.Author = author.Text;
                 beforeEditBook.Release_Year = Convert.ToInt32(release_year.Text);
@@ -103,7 +112,7 @@ namespace Oganesyan_OOPP_lab6
 
                 if (link.Visible)
                 {
-                    if (string.IsNullOrEmpty(link.Text) || string.IsNullOrEmpty(link.Text))
+                    if (string.IsNullOrEmpty(link.Text))
                     {
                         MessageBox.Show("У электронной книги должна быть ссылка.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
@@ -118,18 +127,27 @@ namespace Oganesyan_OOPP_lab6
             }
             catch
             {
-                MessageBox.Show("Рейтинг должен быть числом от 0,0 до 5,0.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Проверьте данные наличии (True - да, False - нет).", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             UpdateBook(ref beforeEditBook, selected);
             UpdateListBox();
             listBox1.SelectedIndex = selected;
+            isAddingObject = false;
             ToggleButtons(true);
+            listBox1.Enabled = true;
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listBox1.SelectedIndex == -1)
+            {
+                ClearFields();
+                ToggleFields(false);
+                return;
+            }
+
             var book = new Book();
             GetBook(ref book, listBox1.SelectedIndex);
             title.Text = book.Title;
@@ -142,19 +160,16 @@ namespace Oganesyan_OOPP_lab6
             if (!string.IsNullOrEmpty(book.Link))
             {
                 link.Text = book.Link;
+                label7.Visible = true;
+                link.Visible = true;
             }
             else
             {
                 link.Clear();
+                label7.Visible = false;
+                link.Visible = false;
             }
-
-            title.Enabled = true;
-            author.Enabled = true;
-            release_year.Enabled = true;
-            publishing_house.Enabled = true;
-            in_stock.Enabled = true;
-            rating.Enabled = true;
-        
+            ToggleFields(true);
         }
         private void UpdateListBox()
         {
@@ -177,7 +192,9 @@ namespace Oganesyan_OOPP_lab6
             label7.Visible = false;
             link.Visible = false;
 
+            isAddingObject = true;
             ToggleButtons(false);
+            listBox1.Enabled = false;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -190,7 +207,9 @@ namespace Oganesyan_OOPP_lab6
             label7.Visible = true;
             link.Visible = true;
 
+            isAddingObject = true;
             ToggleButtons(false);
+            listBox1.Enabled = false;
         }
 
         private void ToggleButtons(bool enable)
@@ -222,23 +241,44 @@ namespace Oganesyan_OOPP_lab6
                     listBox1.SelectedIndex = beforeDelete - 1;
                 }
             }
+
             if (GetLibrarySize() == 0)
             {
-                title.Text = "";
-                author.Text = "";
-                release_year.Text = "";
-                publishing_house.Text = "";
-                in_stock.Text = "";
-                rating.Text = "";
-                link.Text = "";
+                ToggleFields(false);
+                ClearFields();
                 return;
             }
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            UpdateListBox();
-            ToggleButtons(true);
+            if (isAddingObject && listBox1.Items.Count > 0)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Вы уверены, что хотите отменить добавление текущего объекта?",
+                    "Отмена добавления",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    DeleteBook(listBox1.Items.Count - 1);
+                    UpdateListBox();
+
+                    ClearFields();
+                    isAddingObject = false;
+                    ToggleButtons(true);
+                    listBox1.Enabled = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Нет активного добавления для отмены.",
+                    "Отмена",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -256,6 +296,11 @@ namespace Oganesyan_OOPP_lab6
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (GetLibrarySize() == 0)
+            {
+                MessageBox.Show("У вас нет книг для сохранения.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
 
@@ -264,6 +309,27 @@ namespace Oganesyan_OOPP_lab6
                 string filename = saveFileDialog.FileName;
                 SaveBooks(filename);
             }
+        }
+
+        private void ClearFields()
+        {
+            title.Text = "";
+            author.Text = "";
+            release_year.Text = "";
+            publishing_house.Text = "";
+            in_stock.Text = "";
+            rating.Text = "";
+            link.Text = "";
+        }
+        private void ToggleFields(bool enable)
+        {
+            title.Enabled = enable;
+            author.Enabled = enable;
+            release_year.Enabled = enable;
+            publishing_house.Enabled = enable;
+            in_stock.Enabled = enable;
+            rating.Enabled = enable;
+            link.Enabled = enable;
         }
 
         private void title_TextChanged(object sender, EventArgs e) {}
