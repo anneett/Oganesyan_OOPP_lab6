@@ -142,14 +142,10 @@ namespace Oganesyan_OOPP_lab6
             if (!string.IsNullOrEmpty(book.Link))
             {
                 link.Text = book.Link;
-                label7.Visible = true;
-                link.Visible = true;
             }
             else
             {
                 link.Clear();
-                label7.Visible = false;
-                link.Visible = false;
             }
 
             title.Enabled = true;
@@ -248,7 +244,7 @@ namespace Oganesyan_OOPP_lab6
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Binary Files (*.dat)|*.dat";
+            openFileDialog.Filter = "Text Files (*.txt)|*.txt";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -261,7 +257,7 @@ namespace Oganesyan_OOPP_lab6
         private void button3_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Binary Files (*.dat)|*.dat";
+            saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {

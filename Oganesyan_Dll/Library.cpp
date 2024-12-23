@@ -12,7 +12,7 @@ void Library::Clear() {
 
 void Library::SaveToFile(const string& filename) {
     try {
-        ofstream fout(filename, ios::binary);
+        ofstream fout(filename);
         if (!fout) {
             cerr << "Не удалось открыть файл для записи." << endl;
             return;
@@ -28,7 +28,7 @@ void Library::SaveToFile(const string& filename) {
 
 void Library::LoadFromFile(const string& filename) {
     try {
-        ifstream fin(filename, ios::binary);
+        ifstream fin(filename);
         if (!fin) {
             cerr << "Не удалось открыть файл для загрузки." << endl;
             return;
