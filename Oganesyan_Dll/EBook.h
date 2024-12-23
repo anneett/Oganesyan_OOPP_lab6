@@ -7,19 +7,15 @@ class EBook : public Book
 {
 	friend class boost::serialization::access;
 
-public:
+protected:
 
 	string link = "";
 
-	string getLink() const { return link; }
-
-	void setLink(const string& link) { this->link = link; }
+public:
 
 	BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-		virtual ~EBook() {}
-
-	template<class Archive>
+		template<class Archive>
 	void save(Archive& ar, const unsigned int version) const
 	{
 		ar& boost::serialization::base_object<Book>(*this);
@@ -32,6 +28,12 @@ public:
 		ar& boost::serialization::base_object<Book>(*this);
 		ar& link;
 	}
+
+	string getLink() const { return link; }
+
+	void setLink(const string& link) { this->link = link; }
+
+	virtual ~EBook() = default;
 };
 
 BOOST_CLASS_VERSION(EBook, 1)

@@ -48,12 +48,6 @@ namespace Oganesyan_OOPP_lab6
         private static extern int GetLibrarySize();
 
         [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
-        private static extern void GetBookInfo(int index, StringBuilder buffer, int bufferSize);
-
-        [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
-        private static extern void GetBookInfoStruct(int index, out Book book);
-
-        [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
         public static extern bool DeleteBook(int id);
 
         [DllImport(@"C:\Users\egiaz\Documents\GitHub\Oganesyan_OOPP_Dll\Oganesyan_OOPP_lab6\x64\Debug\Oganesyan_Dll.dll", CharSet = CharSet.Ansi)]
@@ -78,7 +72,7 @@ namespace Oganesyan_OOPP_lab6
         {
             if (listBox1.SelectedIndex == -1)
             {
-                MessageBox.Show("Выберите книгу");
+                MessageBox.Show("Выберите, какую добавить книгу.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -88,10 +82,15 @@ namespace Oganesyan_OOPP_lab6
 
             try
             {
-                if (string.IsNullOrEmpty(title.Text) || string.IsNullOrEmpty(publishing_house.Text) ||
-                    Convert.ToInt32(release_year.Text) < 1700 || Convert.ToInt32(release_year.Text) > 2024)
+                if (string.IsNullOrEmpty(title.Text) || string.IsNullOrEmpty(publishing_house.Text))
                 {
-                    MessageBox.Show("Неправильный формат");
+                    MessageBox.Show("У книги должно быть название и издательство.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                if (Convert.ToInt32(release_year.Text) < 1700 || Convert.ToInt32(release_year.Text) > 2024)
+                {
+                    MessageBox.Show("Год должен быть целым числом от 1700 до 2024.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
@@ -104,6 +103,12 @@ namespace Oganesyan_OOPP_lab6
 
                 if (link.Visible)
                 {
+                    if (string.IsNullOrEmpty(link.Text) || string.IsNullOrEmpty(link.Text))
+                    {
+                        MessageBox.Show("У электронной книги должна быть ссылка.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
                     beforeEditBook.Link = link.Text;
                 }
                 else
@@ -113,7 +118,7 @@ namespace Oganesyan_OOPP_lab6
             }
             catch
             {
-                MessageBox.Show("Неправильный формат");
+                MessageBox.Show("Рейтинг должен быть числом от 0,0 до 5,0.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -205,7 +210,7 @@ namespace Oganesyan_OOPP_lab6
         {
             if (listBox1.SelectedIndex == -1)
             {
-                MessageBox.Show("Выберите фильм");
+                MessageBox.Show("Выберите книгу для удаления.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             if (DeleteBook(listBox1.SelectedIndex))
@@ -262,41 +267,16 @@ namespace Oganesyan_OOPP_lab6
             {
                 string filename = saveFileDialog.FileName;
                 SaveBooks(filename);
-                MessageBox.Show("Библиотека успешно сохранена!", "Сохранение", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void title_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-        private void maskedTextBox3_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-
-        }
+        private void title_TextChanged(object sender, EventArgs e) {}
+        private void label1_Click(object sender, EventArgs e) {}
+        private void label2_Click(object sender, EventArgs e) {}
+        private void label3_Click(object sender, EventArgs e) {}
+        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {}
+        private void maskedTextBox3_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) {}
+        private void textBox1_TextChanged(object sender, EventArgs e) {}
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {}
     }
 }

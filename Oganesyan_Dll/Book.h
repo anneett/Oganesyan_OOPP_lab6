@@ -5,7 +5,7 @@ class Book
 {
 	friend class boost::serialization::access;
 
-public:
+protected:
 
 	string title = "";
 	string author = "";
@@ -13,6 +13,8 @@ public:
 	string publishing_house = "";
 	bool in_stock = 0;
 	double rating = 0;
+
+public:
 
 	template<class Archive>
 	void serialize(Archive& ar, const unsigned int version)

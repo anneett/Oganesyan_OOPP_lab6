@@ -38,21 +38,6 @@ extern "C" {
 
     __declspec(dllexport) void __stdcall LoadLibraryBooks(const char* filename) {
         library.LoadFromFile(filename);
-        //if (id < 0 || id >= library.GetSize()) return;
-
-        //auto book = library.get(id);
-
-        //book->setTitle(book_struct.title);
-        //book->setAuthor(book_struct.author);
-        //book->setRelease_Year(book_struct.release_year);
-        //book->setPublishing_House(book_struct.publishing_house);
-        //book->setIn_Stock(book_struct.in_stock);
-        //book->setRating(book_struct.rating);
-
-        //auto eBook = dynamic_pointer_cast<EBook>(book);
-        //if (eBook) {
-        //    eBook->setLink(book_struct.link);
-        //}
     }
 
     __declspec(dllexport) void __stdcall SaveBooks(const char* filename) {
@@ -92,7 +77,7 @@ extern "C" {
             book->setAuthor("");
             book->setRelease_Year(0);
             book->setPublishing_House("");
-            book->setIn_Stock(0);
+            book->setIn_Stock(false);
             book->setRating(0.0);
             library.AddBook(book);
         }
@@ -103,7 +88,7 @@ extern "C" {
             ebook->setAuthor("");
             ebook->setRelease_Year(0);
             ebook->setPublishing_House("");
-            ebook->setIn_Stock(0);
+            ebook->setIn_Stock(false);
             ebook->setRating(0.0);
             ebook->setLink("");
             library.AddBook(ebook);
@@ -111,8 +96,10 @@ extern "C" {
     }
 
     __declspec(dllexport) void GetBook(Book_struct& book_data, int id) {
+
         if (id < 0 || id >= library.GetSize()) return;
         auto book = library.get(id);
+
         strcpy_s(book_data.title, book->getTitle().c_str());
         strcpy_s(book_data.author, book->getAuthor().c_str());
         book_data.release_year = book->getRelease_Year();
