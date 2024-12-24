@@ -42,7 +42,6 @@
             this.author = new System.Windows.Forms.TextBox();
             this.release_year = new System.Windows.Forms.TextBox();
             this.publishing_house = new System.Windows.Forms.TextBox();
-            this.in_stock = new System.Windows.Forms.TextBox();
             this.rating = new System.Windows.Forms.TextBox();
             this.link = new System.Windows.Forms.TextBox();
             this.loadfilebutton = new System.Windows.Forms.Button();
@@ -51,6 +50,7 @@
             this.savebutton = new System.Windows.Forms.Button();
             this.deletebutton = new System.Windows.Forms.Button();
             this.cancelbutton = new System.Windows.Forms.Button();
+            this.in_stock = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // listBox1
@@ -164,13 +164,6 @@
             this.publishing_house.Size = new System.Drawing.Size(293, 22);
             this.publishing_house.TabIndex = 13;
             // 
-            // in_stock
-            // 
-            this.in_stock.Location = new System.Drawing.Point(674, 285);
-            this.in_stock.Name = "in_stock";
-            this.in_stock.Size = new System.Drawing.Size(293, 22);
-            this.in_stock.TabIndex = 14;
-            // 
             // rating
             // 
             this.rating.Location = new System.Drawing.Point(674, 342);
@@ -245,11 +238,22 @@
             this.cancelbutton.UseVisualStyleBackColor = true;
             this.cancelbutton.Click += new System.EventHandler(this.cancelbutton_Click);
             // 
+            // in_stock
+            // 
+            this.in_stock.AutoSize = true;
+            this.in_stock.Location = new System.Drawing.Point(674, 285);
+            this.in_stock.Name = "in_stock";
+            this.in_stock.Size = new System.Drawing.Size(46, 20);
+            this.in_stock.TabIndex = 26;
+            this.in_stock.Text = "Да";
+            this.in_stock.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 570);
+            this.Controls.Add(this.in_stock);
             this.Controls.Add(this.cancelbutton);
             this.Controls.Add(this.deletebutton);
             this.Controls.Add(this.savebutton);
@@ -258,7 +262,6 @@
             this.Controls.Add(this.loadfilebutton);
             this.Controls.Add(this.link);
             this.Controls.Add(this.rating);
-            this.Controls.Add(this.in_stock);
             this.Controls.Add(this.publishing_house);
             this.Controls.Add(this.release_year);
             this.Controls.Add(this.author);
@@ -295,7 +298,6 @@
         private System.Windows.Forms.TextBox author;
         private System.Windows.Forms.TextBox release_year;
         private System.Windows.Forms.TextBox publishing_house;
-        private System.Windows.Forms.TextBox in_stock;
         private System.Windows.Forms.TextBox rating;
         private System.Windows.Forms.TextBox link;
         private System.Windows.Forms.Button loadfilebutton;
@@ -304,6 +306,7 @@
         private System.Windows.Forms.Button savebutton;
         private System.Windows.Forms.Button deletebutton;
         private System.Windows.Forms.Button cancelbutton;
+        private System.Windows.Forms.CheckBox in_stock;
     }
 }
 

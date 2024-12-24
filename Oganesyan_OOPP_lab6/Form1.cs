@@ -107,7 +107,7 @@ namespace Oganesyan_OOPP_lab6
                 beforeEditBook.Author = author.Text;
                 beforeEditBook.Release_Year = Convert.ToInt32(release_year.Text);
                 beforeEditBook.Publishing_House = publishing_house.Text;
-                beforeEditBook.In_Stock = Convert.ToBoolean(in_stock.Text);
+                beforeEditBook.In_Stock = in_stock.Checked;
                 beforeEditBook.Rating = Convert.ToDouble(rating.Text);
 
                 if (link.Visible)
@@ -127,7 +127,7 @@ namespace Oganesyan_OOPP_lab6
             }
             catch
             {
-                MessageBox.Show("Проверьте данные наличии (True - да, False - нет).", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Некорректные данные, проверьте все поля.", "Некорректные данные", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace Oganesyan_OOPP_lab6
             author.Text = book.Author;
             release_year.Text = book.Release_Year.ToString();
             publishing_house.Text = book.Publishing_House;
-            in_stock.Text = book.In_Stock.ToString();
+            in_stock.Checked = book.In_Stock;
             rating.Text = book.Rating.ToString();
 
             if (!string.IsNullOrEmpty(book.Link))
